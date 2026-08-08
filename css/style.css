@@ -1067,7 +1067,7 @@ body {
   margin-right: 16px;
   min-width: 100px;
   color: #908d8d;
-  font-size: 14px;
+  font-size: 16px;
 }
 @media (min-width: 480px) {
   .post-list .post-item {
