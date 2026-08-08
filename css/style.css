@@ -1386,6 +1386,8 @@ article .content .caption {
   border-bottom: 1px dashed #d480aa;
   color: #d480aa;
   font-weight: bold;
+  font-style: normal;
+  font-size: 1.2rem;
 }
 .search-no-result {
   display: none;
