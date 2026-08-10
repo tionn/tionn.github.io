@@ -2,22 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <html lang="zh-TW" class="h-full scroll-smooth">
 <head>
     <meta charset="utf-8" />
@@ -27,152 +11,150 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
     
-    <!-- Prefetch the search script/CSS and Pagefind UI assets at lowest priority so the first
-         click (or "/" shortcut) opens the search box instantly, even on touch devices with no hover. -->
-    <link rel="prefetch" as="script" href="/js/search.min.js?v=4e64082f" />
-    <link rel="prefetch" as="style" href="/css/search.min.css?v=81ae2a10" />
-    <link rel="prefetch" as="script" href="/pagefind/pagefind-ui.js" />
-    <link rel="prefetch" as="style" href="/pagefind/pagefind-ui.css" />
+
+
+<link rel="prefetch" as="style" href="/css/search.min.css?v=c845a359" />
+
+<link rel="prefetch" as="style" href="/pagefind/pagefind-component-ui.css" />
+<link rel="prefetch" as="script" href="/pagefind/pagefind-component-ui.js" />
+
+
     
     
+<script data-cfasync="false">
+;(() => {
+    // Progressive enhancement marker (mobile nav CSS uses html.js before paint).
+    document.documentElement.classList.add('js');
+    const shiro = (window.__shiro = window.__shiro || {});
+    const defaultTheme = "dark";
+    shiro.themeDefault = defaultTheme;
     
-    <!-- Preload the critical (title + body) font stylesheet so it is fetched at highest
-         priority ahead of the blocking theme script, shrinking the swap window.
-         Kept as a preload (not a stylesheet) here so it does not delay the theme script. -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Yuji+Syuku&family=Zen+Old+Mincho:wght@400;600&family=Noto+Serif+SC:wght@400;600&display=swap" />
-    
-    <!-- FOUC prevention: resolve theme before first paint.
-         Flow: read default → build valid states → read localStorage (try/catch for Safari private mode)
-         → validate saved state → set data-theme-state on <html> → resolve effective dark/light
-         → set data-theme and colorScheme. In "system" mode it also keeps following OS
-         light/dark changes live, so the page updates without a reload even when the toggle is hidden.
-         data-cfasync="false" stops Cloudflare Rocket Loader from deferring this past first paint
-         (it must run synchronously for both theme resolution and the preloader skip). -->
-    <script data-cfasync="false">
-    ;(() => {
-        const defaultTheme = "dark";
-        window.__themeDefault = defaultTheme;
-        const states = defaultTheme === 'system' ? ['system', 'light', 'dark'] : ['light', 'dark'];
-        let saved;
-        try { saved = localStorage.getItem('theme'); } catch (_) {}
-        const state = saved && states.includes(saved) ? saved : defaultTheme;
-        const html = document.documentElement;
-        html.setAttribute('data-theme-state', state);
-        const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const isDark = state === 'dark' || (state !== 'light' && darkQuery.matches);
-        html.setAttribute('data-theme', isDark ? 'dark' : 'light');
-        html.style.colorScheme = isDark ? 'dark' : 'light';
-        if (defaultTheme === 'system') {
-            // Keep following OS light/dark changes while in "system" mode even when the
-            // toggle (and theme-toggle.js) is disabled, so the page updates without a reload.
-            const followSystem = () => {
-                if (html.getAttribute('data-theme-state') !== 'system') return;
-                html.setAttribute('data-theme', darkQuery.matches ? 'dark' : 'light');
-                html.style.colorScheme = darkQuery.matches ? 'dark' : 'light';
-            };
-            if (darkQuery.addEventListener) darkQuery.addEventListener('change', followSystem);
-            else if (darkQuery.addListener) darkQuery.addListener(followSystem);
+    const states = defaultTheme === 'system' ? ['system', 'light', 'dark'] : ['light', 'dark'];
+    let saved;
+    try { saved = localStorage.getItem('theme'); } catch (_) {}
+    const state = saved && states.includes(saved) ? saved : defaultTheme;
+    const html = document.documentElement;
+    html.setAttribute('data-theme-state', state);
+    const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    // Pagefind dark contract only when search is enabled.
+    const syncPagefindTheme = true;
+    shiro.searchEnabled = syncPagefindTheme;
+    // Single source for theme-toggle.js and system-follow listener.
+    const applyResolvedTheme = (dark) => {
+        html.setAttribute('data-theme', dark ? 'dark' : 'light');
+        if (syncPagefindTheme) {
+            if (dark) html.setAttribute('data-pf-theme', 'dark');
+            else html.removeAttribute('data-pf-theme');
         }
-        try {
-            if (sessionStorage.getItem('shiro:title-font-ready') === '1') {
-                html.classList.add('shiro-preloader-done');
-            }
-        } catch (_) {}
-    })();
-    </script>
-    
-    
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Yuji+Syuku&family=Zen+Old+Mincho:wght@400;600&family=Noto+Serif+SC:wght@400;600&display=swap" />
-    
-    
-    
-    <!-- Non-critical (display=optional) font stylesheets load async so they never block first
-         paint or compete with the critical title+body stylesheet above. -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=optional" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=optional" /></noscript>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <title>歸檔: 2025 | 悟言閣</title>
+        html.style.colorScheme = dark ? 'dark' : 'light';
+    };
+    shiro.applyResolvedTheme = applyResolvedTheme;
+    applyResolvedTheme(state === 'dark' || (state !== 'light' && darkQuery.matches));
+    if (defaultTheme === 'system') {
+        // Follow OS theme while in system mode even if the toggle script is absent.
+        const followSystem = () => {
+            if (html.getAttribute('data-theme-state') !== 'system') return;
+            applyResolvedTheme(darkQuery.matches);
+        };
+        if (darkQuery.addEventListener) darkQuery.addEventListener('change', followSystem);
+        else if (darkQuery.addListener) darkQuery.addListener(followSystem);
+    }
+    // Preloader skip: the session collection must contain this page's font-bundle URL.
+    const fontsReadyToken = "https://fonts.googleapis.com/css2?family=Cardo:wght@400;700\u0026family=Yuji+Syuku\u0026family=Zen+Old+Mincho:wght@400;600\u0026family=Cormorant+Garamond:wght@400;600\u0026family=Noto+Serif+TC:wght@400;600\u0026display=swap";
+    shiro.fontsReadyToken = fontsReadyToken;
+    try {
+        const storedFontsReady = sessionStorage.getItem('shiro:fonts-ready');
+        const readyFontTokens = storedFontsReady === fontsReadyToken
+            ? [storedFontsReady]
+            : JSON.parse(storedFontsReady || '[]');
+        if (
+            fontsReadyToken
+            && Array.isArray(readyFontTokens)
+            && readyFontTokens.indexOf(fontsReadyToken) !== -1
+        ) {
+            html.classList.add('shiro-preloader-done');
+        }
+    } catch (_) {}
+})();
+</script>
 
-    <!-- SEO Meta -->
-    
-    <meta name="description" content="靜裡乾坤大，閒中日月長。Tsīng-lí khiân-khun tāi, hân tiong ji̍t gua̍t tiông." />
-    
-    
-    <meta name="author" content="tionn" />
-    
     
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="歸檔: 2025 | 悟言閣" />
-    
-    <meta property="og:description" content="靜裡乾坤大，閒中日月長。Tsīng-lí khiân-khun tāi, hân tiong ji̍t gua̍t tiông." />
-    
-    <meta property="og:url" content="https://tionn.github.io/archives/2025/index.html" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="悟言閣" />
-    
-    
-    <meta property="og:locale" content="zh_TW" />
-    
-    
     
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="歸檔: 2025 | 悟言閣" />
-    
-    <meta name="twitter:description" content="靜裡乾坤大，閒中日月長。Tsīng-lí khiân-khun tāi, hân tiong ji̍t gua̍t tiông." />
-    
+
+
+
+
+
+
+
+<title>歸檔: 2025 | 悟言閣</title>
+
+
+<meta name="description" content="靜裡乾坤大，閒中日月長。Tsīng-lí khiân-khun tāi, hân tiong ji̍t gua̍t tiông." />
+
+
+<meta name="author" content="tionn" />
+
+
+
+<meta property="og:title" content="歸檔: 2025 | 悟言閣" />
+
+<meta property="og:description" content="靜裡乾坤大，閒中日月長。Tsīng-lí khiân-khun tāi, hân tiong ji̍t gua̍t tiông." />
+
+<meta property="og:url" content="https://tionn.github.io/archives/2025/index.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="悟言閣" />
+
+
+<meta property="og:locale" content="zh_TW" />
+
+
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="歸檔: 2025 | 悟言閣" />
+
+<meta name="twitter:description" content="靜裡乾坤大，閒中日月長。Tsīng-lí khiân-khun tāi, hân tiong ji̍t gua̍t tiông." />
+
+
+
+<link rel="canonical" href="https://tionn.github.io/archives/2025/index.html" />
+
+
+
+
+
+
+
+<link rel="icon" href="/favicon.svg" />
+
+
+
+
     
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://tionn.github.io/archives/2025/index.html" />
 
-    <!-- Pagination rel hints for paginated list pages (home / archive / tag / category) -->
-    
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Yuji+Syuku&family=Zen+Old+Mincho:wght@400;600&family=Cormorant+Garamond:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap" />
 
-    <!-- Structured data (JSON-LD) -->
-    
-    
+<link rel="stylesheet" href="/css/style.min.css?v=84edaf60">
 
-    <!-- Favicon -->
-    
-    <link rel="icon" href="/favicon.svg" />
-    
 
-    <!-- RSS -->
-    
-    
+<script defer data-cfasync="false" src="/js/preloader.min.js?v=881cdc82"></script>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/css/style.min.css?v=775ef865">
-    
-    
-    <!-- Preloader script in <head> (defer) so its fetch starts during head parse;
-         data-cfasync="false" stops Cloudflare Rocket Loader from deferring it past first paint. -->
-    <script defer data-cfasync="false" src="/js/preloader.min.js?v=aab4aff5"></script>
 </head>
 
 
-<body class="h-full fog-bg text-slate-800">
-    <!-- Font-load preloader: covers the title-font swap until preloader.min.js fades it out.
-         data-shiro-font-text lists the title glyphs to wait for. -->
-    <div id="shiroPreloader" class="shiro-preloader" aria-hidden="true"
-        data-shiro-font-text="悟言閣悟白は、余白の名。">
+<body class="h-full fog-bg text-text-body">
+    <!-- Preloader: font CSS load + fonts.ready, or preloader.min.js deadline. -->
+    <div id="shiroPreloader" class="shiro-preloader" aria-hidden="true">
         <div class="shiro-preloader-ripple" aria-hidden="true">
             <span class="shiro-preloader-ring"></span>
             <span class="shiro-preloader-ring"></span>
         </div>
     </div>
+    <a href="#main-content" class="shiro-skip-link">跳到正文</a>
     
     
 <svg width="0" height="0" class="absolute pointer-events-none" aria-hidden="true">
@@ -193,20 +175,18 @@
     
     
 
-    
-    
-
     <div class="min-h-full px-4 pt-14 pb-6 md:pb-5">
 
         <!-- Paper Card -->
         <div
-            class="paper relative mx-auto w-full max-w-4xl rounded-xl px-5 sm:px-8 md:px-12 lg:px-14 pt-10 pb-6 md:pt-12 md:pb-8">
+            class="paper mx-auto w-full max-w-4xl rounded-xl px-5 sm:px-8 md:px-12 lg:px-14 pt-10 pb-6 md:pt-12 md:pb-8">
 
             
 
-<header class="relative" data-pagefind-ignore>
 
-    <div class="relative flex items-start justify-center">
+<header data-pagefind-ignore>
+
+    <div class="flex items-start justify-center">
         <div class="text-center">
             <div class="relative inline-block">
                 
@@ -222,9 +202,9 @@
 <svg width="52" height="52" viewBox="0 0 100 100" aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg">
     <path d="M15,12 Q50,5 85,12 Q95,50 88,88 Q50,95 12,88 Q5,50 15,12 Z"
-        fill="var(--color-seal)" filter="url(#seal-roughness)" opacity="0.92" />
+        fill="var(--color-seal-fill)" filter="url(#seal-roughness)" opacity="0.92" />
     <text x="50" y="50" text-anchor="middle" dominant-baseline="central"
-        font-size="42" fill="rgba(255,255,255,0.92)" filter="url(#text-erosion)"
+        font-size="42" fill="var(--color-on-seal)" filter="url(#text-erosion)"
         class="seal-text select-none">悟</text>
 </svg>
 
@@ -236,11 +216,14 @@
                 Ngōo-giân-koh
             </p>
             
-            <div class="mt-3 sm:mt-4 flex justify-center gap-2">
+            
+            
+            <div class="mt-3 sm:mt-4 flex items-center justify-center gap-2">
                 
                 
                 
-                <button id="searchToggle" type="button" class="focus-elegant header-pill-btn" aria-haspopup="dialog" aria-label="搜尋">
+                
+                <button id="searchToggle" type="button" class="focus-elegant header-pill-btn" aria-haspopup="dialog" aria-expanded="false" aria-label="搜尋" disabled>
                     
 <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <circle cx="11" cy="11" r="7"></circle>
@@ -250,6 +233,7 @@
                 </button>
                 
             </div>
+            
         </div>
     </div>
 </header>
@@ -259,12 +243,13 @@
 <nav class="mt-8 md:mt-10" aria-label="選單" data-pagefind-ignore>
     <!-- Mobile Toggle -->
     <div class="flex items-center justify-center md:hidden">
+        
         <button id="menuBtn" type="button"
-            class="focus-elegant inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-paper/95 px-4 py-2 text-sm text-slate-700 shadow-xs"
-            aria-expanded="false" aria-controls="mobileMenu">
+            class="focus-elegant inline-flex cursor-pointer items-center gap-2 rounded-full border border-border-strong bg-paper/95 px-4 py-2 text-sm text-text-body shadow-xs"
+            aria-expanded="false" aria-controls="mobileMenu" disabled>
             <span class="text-base leading-none tracking-widest">選單</span>
             
-<svg class="size-4 text-slate-500 transition-transform duration-200" id="menuChevron"
+<svg class="size-4 text-text-chrome transition-transform duration-200" id="menuChevron"
     viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
     <path fill-rule="evenodd"
         d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
@@ -276,88 +261,112 @@
 
     <!-- Desktop Menu -->
     <div class="hidden md:block">
-        <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-base text-slate-700 px-4">
+        <ul class="nav-desktop flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-base text-text-body px-4">
+            
+            <li>
+
+
+<a class="nav-desktop-link focus-elegant rounded-md px-2 py-1 hover:text-seal transition-colors"
+    href="/">Home</a>
+</li>
+            
+            <li class="text-text-subtle select-none" role="separator" aria-hidden="true">/</li>
             
             
+            <li>
+
+
+<a class="nav-desktop-link focus-elegant rounded-md px-2 py-1 hover:text-seal transition-colors"
+    href="/archives">Archives</a>
+</li>
             
-            <li><a class="focus-elegant rounded-md px-2 py-1 hover:text-seal transition-colors"
-                    href="/" >Home</a></li>
-            
-            <li class="text-slate-400 select-none" role="separator" aria-hidden="true">/</li>
-            
-            
-            
-            
-            <li><a class="focus-elegant rounded-md px-2 py-1 hover:text-seal transition-colors"
-                    href="/archives" >Archives</a></li>
-            
-            <li class="text-slate-400 select-none" role="separator" aria-hidden="true">/</li>
+            <li class="text-text-subtle select-none" role="separator" aria-hidden="true">/</li>
             
             
+            <li>
+
+
+<a class="nav-desktop-link focus-elegant rounded-md px-2 py-1 hover:text-seal transition-colors"
+    href="/categories">Categories</a>
+</li>
+            
+            <li class="text-text-subtle select-none" role="separator" aria-hidden="true">/</li>
             
             
-            <li><a class="focus-elegant rounded-md px-2 py-1 hover:text-seal transition-colors"
-                    href="/categories" >Categories</a></li>
-            
-            <li class="text-slate-400 select-none" role="separator" aria-hidden="true">/</li>
-            
-            
-            
-            
-            <li><a class="focus-elegant rounded-md px-2 py-1 hover:text-seal transition-colors"
-                    href="/tags" >Tags</a></li>
+            <li>
+
+
+<a class="nav-desktop-link focus-elegant rounded-md px-2 py-1 hover:text-seal transition-colors"
+    href="/tags">Tags</a>
+</li>
             
             
         </ul>
     </div>
 
-    <!-- Mobile Menu Panel -->
+    <!-- Mobile Menu Panel: open without JS; html.js collapses before paint until toggled. -->
     <div id="mobileMenu" class="menu-panel md:hidden mt-4" data-open="false">
         <ul
-            class="mx-auto max-w-sm max-h-menu overflow-y-auto rounded-2xl border border-slate-200 bg-paper/95 shadow-xs">
+            class="mx-auto max-w-sm max-h-menu overflow-y-auto rounded-2xl border border-border-strong bg-paper/95 shadow-xs">
+            
+            <li>
+
+
+<a class="focus-elegant block px-6 py-3 text-center text-text-body hover:text-seal hover:bg-seal/5 transition-colors"
+    href="/">Home</a>
+</li>
+            
+            <li class="h-px bg-border-decorative" role="separator" aria-hidden="true"></li>
             
             
+            <li>
+
+
+<a class="focus-elegant block px-6 py-3 text-center text-text-body hover:text-seal hover:bg-seal/5 transition-colors"
+    href="/archives">Archives</a>
+</li>
             
-            <li><a class="focus-elegant block px-6 py-3 text-center text-slate-800 hover:text-seal hover:bg-seal/5 transition-colors"
-                    href="/" >Home</a></li>
-            
-            <li class="h-px bg-slate-200/70" role="separator" aria-hidden="true"></li>
-            
-            
-            
-            
-            <li><a class="focus-elegant block px-6 py-3 text-center text-slate-800 hover:text-seal hover:bg-seal/5 transition-colors"
-                    href="/archives" >Archives</a></li>
-            
-            <li class="h-px bg-slate-200/70" role="separator" aria-hidden="true"></li>
+            <li class="h-px bg-border-decorative" role="separator" aria-hidden="true"></li>
             
             
+            <li>
+
+
+<a class="focus-elegant block px-6 py-3 text-center text-text-body hover:text-seal hover:bg-seal/5 transition-colors"
+    href="/categories">Categories</a>
+</li>
+            
+            <li class="h-px bg-border-decorative" role="separator" aria-hidden="true"></li>
             
             
-            <li><a class="focus-elegant block px-6 py-3 text-center text-slate-800 hover:text-seal hover:bg-seal/5 transition-colors"
-                    href="/categories" >Categories</a></li>
-            
-            <li class="h-px bg-slate-200/70" role="separator" aria-hidden="true"></li>
-            
-            
-            
-            
-            <li><a class="focus-elegant block px-6 py-3 text-center text-slate-800 hover:text-seal hover:bg-seal/5 transition-colors"
-                    href="/tags" >Tags</a></li>
+            <li>
+
+
+<a class="focus-elegant block px-6 py-3 text-center text-text-body hover:text-seal hover:bg-seal/5 transition-colors"
+    href="/tags">Tags</a>
+</li>
             
             
         </ul>
     </div>
+    
+    <script data-cfasync="false">
+    if (document.documentElement.classList.contains('js')) {
+        var menuPanel = document.getElementById('mobileMenu');
+        if (menuPanel) menuPanel.inert = true;
+    }
+    </script>
 </nav>
 
 
 
             <!-- Main Content -->
-            <main class="section-divider">
+            <main id="main-content" class="section-divider" tabindex="-1">
                 
 
 
 <section class="mx-auto max-w-3xl">
+    
     
 <header class="mb-10 text-center">
     <h1 class="section-title">
@@ -365,13 +374,13 @@
     </h1>
     
 <div class="my-4 flex items-center justify-center gap-3" aria-hidden="true">
-    <div class="h-px flex-1 bg-linear-to-r from-transparent to-slate-300 max-w-divider"></div>
-    <svg class="h-4 w-10 shrink-0 text-slate-300" viewBox="0 0 40 10">
+    <div class="h-px flex-1 bg-linear-to-r from-transparent to-text-faint max-w-divider"></div>
+    <svg class="h-4 w-10 shrink-0 text-text-faint" viewBox="0 0 40 10">
         <circle cx="20" cy="5" r="3" fill="currentColor" opacity="0.9" />
         <circle cx="4" cy="5" r="1.5" fill="currentColor" opacity="0.6" />
         <circle cx="36" cy="5" r="1.5" fill="currentColor" opacity="0.6" />
     </svg>
-    <div class="h-px flex-1 bg-linear-to-l from-transparent to-slate-300 max-w-divider"></div>
+    <div class="h-px flex-1 bg-linear-to-l from-transparent to-text-faint max-w-divider"></div>
 </div>
 
 </header>
@@ -383,38 +392,36 @@
         
     <div class="space-y-16 max-w-2xl mx-auto">
         
-        
-            
-            
+        <div class="relative">
+            <h2 class="section-heading">
                 
-                
-                <div class="relative">
-                <h2 class="section-heading">
-                    
-<svg class="size-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+<svg class="size-4 text-text-subtle shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 </svg>
 
-                    2025
-                </h2>
-                <div class="space-y-4">
-            
-            
+                
+                
+                <a href="/archives/2025/"
+                    class="section-heading-link oldstyle-nums">2025</a>
+                
+            </h2>
+            <div class="space-y-4">
+                
+                
 
 
-<article class="group flex items-baseline gap-6">
-    <time datetime="2025-04-06" class="w-24 shrink-0 text-right text-sm font-medium text-slate-400 oldstyle-nums">
+<article class="group flex min-w-0 items-baseline gap-6">
+    <time datetime="2025-04-06" class="w-24 shrink-0 text-right text-sm text-text-chrome oldstyle-nums">
         2025/04/06
     </time>
-    <h3 class="text-base font-normal text-slate-700 transition-colors group-hover:text-seal">
-        <a href="/202504061314/" class="link-underline">網站起鼓</a>
+    <h3 class="min-w-0 text-base font-normal text-text-body transition-colors group-hover:text-seal">
+        <a href="/202504061314/" class="link-underline break-words">網站起鼓</a>
     </h3>
 </article>
 
-        
-        
+                
             </div>
-            </div>
+        </div>
         
     </div>
 
@@ -426,10 +433,10 @@
 
             </main>
 
-            <footer class="section-divider" data-pagefind-ignore>
-    <div class="text-center text-sm text-slate-500 leading-relaxed">
+            <footer class="section-divider site-footer" data-pagefind-ignore>
+    <div class="site-footer-meta text-center text-sm text-text-chrome leading-relaxed">
         <p>&copy; <span class="oldstyle-nums">2025–2026</span> 悟言閣</p>
-        <p class="font-eng text-footnote tracking-wide opacity-90">Elegant theme by <a href="https://github.com/Acris/hexo-theme-shiro" target="_blank" rel="noopener noreferrer" class="link-muted">Shiro</a> · Made by <a href="https://acris.me" target="_blank" rel="noopener noreferrer" class="link-muted">Acris</a>
+        <p class="font-eng text-footnote tracking-wide opacity-90">Elegant theme by <a href="https://github.com/Acris/hexo-theme-shiro" target="_blank" rel="noopener noreferrer" class="link-chrome">Shiro</a> · Made by <a href="https://acris.me" target="_blank" rel="noopener noreferrer" class="link-chrome">Acris</a>
                         with <span aria-label="love" title="love">❤️</span></p>
     </div>
 </footer>
@@ -438,12 +445,30 @@
 
         <!-- Note Text — decorative aside, not part of main content or footer -->
         <aside class="mt-4 text-center" aria-hidden="true" role="presentation">
-            <p class="site-note font-title text-xs sm:text-sm text-slate-400/70 tracking-note font-light select-none" lang="ja">
+            <p class="site-note font-title text-xs sm:text-sm text-text-subtle/70 tracking-note select-none" lang="ja">
                 白は、余白の名。
             </p>
         </aside>
     </div>
 
+    
+    
+    
+    <div class="shiro-search-components" data-pagefind-ignore>
+        <pagefind-config bundle-path="/pagefind/" base-url="/"></pagefind-config>
+        <pagefind-modal reset-on-close>
+            <pagefind-modal-header>
+                <pagefind-input placeholder="搜尋文章…"></pagefind-input>
+            </pagefind-modal-header>
+            <pagefind-modal-body>
+                <pagefind-summary></pagefind-summary>
+                <pagefind-results></pagefind-results>
+            </pagefind-modal-body>
+            <pagefind-modal-footer>
+                <pagefind-keyboard-hints></pagefind-keyboard-hints>
+            </pagefind-modal-footer>
+        </pagefind-modal>
+    </div>
     
 
     <!-- Scripts -->
@@ -451,37 +476,24 @@
     
     <script>
         
-        window.__i18n = window.__i18n || {};
+        
+        (window.__shiro = window.__shiro || {})["pagefindBase"] = "/pagefind/";
+        (window.__shiro = window.__shiro || {})["searchCss"] = "/css/search.min.css?v=c845a359";
         
         
-        window.__i18n["search"] = {"button":"搜尋","close":"關閉","loading":"載入中…","many_results":"找到 [COUNT] 個與 \"[SEARCH_TERM]\" 相關的結果","one_result":"找到 [COUNT] 個與 \"[SEARCH_TERM]\" 相關的結果","placeholder":"搜尋文章…","unavailable":"搜尋暫時無法使用。","zero_results":"未找到與 \"[SEARCH_TERM]\" 相關的內容"};
-        window["__pagefindBase"] = "/pagefind/";
-        window["__searchCss"] = "/css/search.min.css?v=81ae2a10";
-        window["__searchScript"] = "/js/search.min.js?v=4e64082f";
-        
-        
-        
-        
-        window["__mobileMenuScript"] = "/js/mobile-menu.min.js?v=346d5ab1";
         
     </script>
     
     
-    <script defer src="/js/search-bootstrap.min.js?v=360bb33e"></script>
+    <script defer src="/js/runtime.min.js?v=71138c68"></script>
     
+    <script defer src="/js/search-bootstrap.min.js?v=e6ff1f0d"></script>
     
+    <script defer src="/js/mobile-menu.min.js?v=40df95a6"></script>
     
-    
-    
-    
-    
-    
-    <script defer src="/js/mobile-menu-bootstrap.min.js?v=2703c648"></script>
     
 
     
-
-
 
 </body>
 </html>
