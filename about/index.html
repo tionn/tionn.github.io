@@ -18,7 +18,7 @@
 
 
 
-<html lang="en" class="h-full scroll-smooth">
+<html lang="zh-TW" class="h-full scroll-smooth">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,7 +39,7 @@
     <!-- Preload the critical (title + body) font stylesheet so it is fetched at highest
          priority ahead of the blocking theme script, shrinking the swap window.
          Kept as a preload (not a stylesheet) here so it does not delay the theme script. -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Yuji+Syuku&family=Zen+Old+Mincho:wght@400;600&display=swap" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Yuji+Syuku&family=Zen+Old+Mincho:wght@400;600&family=Noto+Serif+SC:wght@400;600&display=swap" />
     
     <!-- FOUC prevention: resolve theme before first paint.
          Flow: read default → build valid states → read localStorage (try/catch for Safari private mode)
@@ -82,7 +82,7 @@
     </script>
     
     
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Yuji+Syuku&family=Zen+Old+Mincho:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Yuji+Syuku&family=Zen+Old+Mincho:wght@400;600&family=Noto+Serif+SC:wght@400;600&display=swap" />
     
     
     
@@ -121,7 +121,7 @@
     <meta property="og:site_name" content="悟言閣" />
     
     
-    <meta property="og:locale" content="en" />
+    <meta property="og:locale" content="zh_TW" />
     
     
     
@@ -240,7 +240,7 @@
                 
                 
                 
-                <button id="searchToggle" type="button" class="focus-elegant header-pill-btn" aria-haspopup="dialog" aria-label="Search">
+                <button id="searchToggle" type="button" class="focus-elegant header-pill-btn" aria-haspopup="dialog" aria-label="搜尋">
                     
 <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <circle cx="11" cy="11" r="7"></circle>
@@ -256,13 +256,13 @@
 
 <!-- Navigation -->
 
-<nav class="mt-8 md:mt-10" aria-label="Menu" data-pagefind-ignore>
+<nav class="mt-8 md:mt-10" aria-label="選單" data-pagefind-ignore>
     <!-- Mobile Toggle -->
     <div class="flex items-center justify-center md:hidden">
         <button id="menuBtn" type="button"
             class="focus-elegant inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-paper/95 px-4 py-2 text-sm text-slate-700 shadow-xs"
             aria-expanded="false" aria-controls="mobileMenu">
-            <span class="text-base leading-none tracking-widest">Menu</span>
+            <span class="text-base leading-none tracking-widest">選單</span>
             
 <svg class="size-4 text-slate-500 transition-transform duration-200" id="menuChevron"
     viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -441,7 +441,7 @@
         window.__i18n = window.__i18n || {};
         
         
-        window.__i18n["search"] = {"button":"Search","close":"Close","loading":"Loading...","many_results":"[COUNT] results for \"[SEARCH_TERM]\"","one_result":"[COUNT] result for \"[SEARCH_TERM]\"","placeholder":"Search posts...","unavailable":"Search is temporarily unavailable.","zero_results":"No results for \"[SEARCH_TERM]\""};
+        window.__i18n["search"] = {"button":"搜尋","close":"關閉","loading":"載入中…","many_results":"找到 [COUNT] 個與 \"[SEARCH_TERM]\" 相關的結果","one_result":"找到 [COUNT] 個與 \"[SEARCH_TERM]\" 相關的結果","placeholder":"搜尋文章…","unavailable":"搜尋暫時無法使用。","zero_results":"未找到與 \"[SEARCH_TERM]\" 相關的內容"};
         window["__pagefindBase"] = "/pagefind/";
         window["__searchCss"] = "/css/search.min.css?v=81ae2a10";
         window["__searchScript"] = "/js/search.min.js?v=4e64082f";
