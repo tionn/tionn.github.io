@@ -159,6 +159,8 @@
 <link rel="stylesheet" href="/css/style.min.css?v=53496bf8">
 
 
+<link rel="stylesheet" href="/css/toc.min.css?v=d9987942">
+
 <script defer data-cfasync="false" src="/js/preloader.min.js?v=881cdc82"></script>
 
 </head>
@@ -193,6 +195,8 @@
     
     <div id="progressBar" class="progress-bar" aria-hidden="true"></div>
     
+    
+    <div id="backToTopSentinel" class="back-to-top-sentinel" aria-hidden="true"></div>
     
 
     <div class="min-h-full px-4 pt-14 pb-6 md:pb-5">
@@ -448,6 +452,40 @@
     </header>
 
     
+    
+<!-- Inline TOC (viewports below the `toc` breakpoint, where the fixed sidebar cannot fit beside the paper card).
+     html.js collapses the body before paint; toggle is disabled until toc.js binds. No-JS keeps body open. -->
+<nav id="tocInline" class="toc-inline toc:hidden mb-8" aria-label="目錄" data-pagefind-ignore>
+    <button type="button" class="toc-toggle" aria-expanded="false" aria-controls="tocInlineBody" disabled>
+        <span class="toc-toggle-title">目錄</span>
+        
+<svg class="toc-chevron size-4 text-text-chrome transition-transform duration-200"
+    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <path fill-rule="evenodd"
+        d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
+        clip-rule="evenodd" />
+</svg>
+
+    </button>
+    <div class="toc-body" id="tocInlineBody" data-open="false"><ul class="toc-list"><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-09-03" data-target="2026-09-03">2026-09-03</a></li><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-09-02" data-target="2026-09-02">2026-09-02</a></li><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-09-01" data-target="2026-09-01">2026-09-01</a></li></ul></div>
+    
+    <script data-cfasync="false">
+    if (document.documentElement.classList.contains('js')) {
+        var tocBody = document.getElementById('tocInlineBody');
+        if (tocBody) tocBody.inert = true;
+    }
+    </script>
+</nav>
+
+<!-- Sidebar TOC (`toc` breakpoint and up; see --breakpoint-toc in source/css/_core/tokens.css) -->
+<nav id="tocSidebar" class="toc-sidebar hidden toc:block" aria-label="目錄" data-pagefind-ignore>
+    <div class="toc-sidebar-inner">
+        <p class="toc-sidebar-title">目錄</p>
+        <div class="toc-body"><ul class="toc-list"><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-09-03" data-target="2026-09-03">2026-09-03</a></li><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-09-02" data-target="2026-09-02">2026-09-02</a></li><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-09-01" data-target="2026-09-01">2026-09-01</a></li></ul></div>
+    </div>
+</nav>
+
+    
 
     <div class="prose-shiro" data-pagefind-body>
         <p>Jī khòng jī lio̍k nî káu--gue̍h ê gue̍h-tsì.</p>
@@ -483,12 +521,13 @@
 ## 2026-09-04
 -->
 
-
-
-
-
 <h2 id="2026-09-03"><a href="#2026-09-03" class="headerlink" title="2026-09-03"></a>2026-09-03</h2><ul>
-<li><p>Sûn tshân-tsuí, khuànn-tio̍h tsa̍p-it-gue̍h tī Tiong-iong Gián-kiù-īnn pān--ê <a target="_blank" rel="noopener" href="https://www.ling.sinica.edu.tw/main/en?/sign/ILAS-NINJAL">ILAS–NINJAL Joint Conference on Semantics</a>, lāi-bīn ū kuí-phinn-á iàu-ì ê tê-bo̍k.</p>
+<li><p>Mê-nî la̍k--gue̍h <a target="_blank" rel="noopener" href="https://www.ling.sinica.edu.tw/main/en?/sign/AFLA34">The 34th Annual Meeting of the Austronesian Formal Linguistics Association (AFLA-34)</a> àn-sǹg tiàm Tiong-iong Gián-kiú-īnn pān, tiah-iàu mê-nî it-gue̍h tsa̍p-gōo tsìn-tsîng kià, m̄-tsai kám ài thàn tsit-hō ki-huē khì thiann Guân-tsū-bîn-gí Gí-giân Tiau-tsa Gián-kiú (Studies in Survey of Austronesian Languages)? Tsit-mn̂g khò kán-ná m̄-bat khui--kuè, nā bô khì thiann, āu-tsuā kiám-tshái bô ki-huē.</p>
+<p>  M̄-koh nā-beh tâu AFLA-34, tsín ū tsi̍t-ê būn-tê sī: sui-bóng guá Lâm-tó gí-giân ū tsi̍t-kuá tê-bo̍k siōnn-beh tshì-khuànn-māi, hia tê-bo̍k lóng khah uá Gí-giân Luī-hîng-ha̍k (Linguistic Typology), m̄-sī Hîng-sik Gí-giân-ha̍k (Formal Linguistics). Lâm-tó gí-giân ê hîng-sik hun-sik ài án-nuá khui-thiah, guá put-lí-á tshenn-soo, ē-tàng kóng m̄-bat tshì--kuè.</p>
+</li>
+</ul>
+<h2 id="2026-09-02"><a href="#2026-09-02" class="headerlink" title="2026-09-02"></a>2026-09-02</h2><ul>
+<li><p>Sûn tshân-tsuí, khuànn-tio̍h tsa̍p-it--gue̍h tī Tiong-iong Gián-kiù-īnn pān--ê <a target="_blank" rel="noopener" href="https://www.ling.sinica.edu.tw/main/en?/sign/ILAS-NINJAL">ILAS–NINJAL Joint Conference on Semantics</a>, lāi-bīn ū kuí-phinn-á iàu-ì ê tê-bo̍k.</p>
 <p>  Guá bo̍k-tsîng sī tuì Tâi-gí kù-huat ê gián-kiú khah si̍k-sāi, bē-tàng kóng sī si̍k-tshiú, m̄-koh ū-kuá king-giām. Hîng-sik Gí-ì-ha̍k (Formal Semantics) guá kàu-tann iáu sa bô tsáng-thâu, m̄-bat tsìng-king iōng-lâi tshú-lí Tâi-gí gí-liāu.</p>
 <p>  Yi-Hsun Chen, Mingming Liu &#x2F; On the Modal Use of Mandarin <em>ye</em></p>
 <p>  Jo-wang Lin &#x2F; Sentence-final <em>de</em> in Mandarin Chinese: Propositional Assertion, Discourse Linking, and Aspectual Stability</p>
@@ -564,6 +603,12 @@
     </div>
 
     
+    <button id="backToTop" type="button" class="back-to-top" data-visible="false" aria-label="回到頂部" hidden>
+        <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>
+    </button>
+    
     
     
     <div class="shiro-search-components" data-pagefind-ignore>
@@ -601,7 +646,11 @@
     
     <script defer src="/js/search-bootstrap.min.js?v=e6ff1f0d"></script>
     
+    <script defer src="/js/toc.min.js?v=3e0cca47"></script>
+    
     <script defer src="/js/progress.min.js?v=d01e3a23"></script>
+    
+    <script defer src="/js/back-to-top.min.js?v=ff36a748"></script>
     
     <script defer src="/js/mobile-menu.min.js?v=40df95a6"></script>
     
