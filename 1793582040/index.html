@@ -159,6 +159,8 @@
 <link rel="stylesheet" href="/css/style.min.css?v=53496bf8">
 
 
+<link rel="stylesheet" href="/css/toc.min.css?v=d9987942">
+
 <script defer data-cfasync="false" src="/js/preloader.min.js?v=881cdc82"></script>
 
 </head>
@@ -193,6 +195,8 @@
     
     <div id="progressBar" class="progress-bar" aria-hidden="true"></div>
     
+    
+    <div id="backToTopSentinel" class="back-to-top-sentinel" aria-hidden="true"></div>
     
 
     <div class="min-h-full px-4 pt-14 pb-6 md:pb-5">
@@ -448,6 +452,40 @@
     </header>
 
     
+    
+<!-- Inline TOC (viewports below the `toc` breakpoint, where the fixed sidebar cannot fit beside the paper card).
+     html.js collapses the body before paint; toggle is disabled until toc.js binds. No-JS keeps body open. -->
+<nav id="tocInline" class="toc-inline toc:hidden mb-8" aria-label="目錄" data-pagefind-ignore>
+    <button type="button" class="toc-toggle" aria-expanded="false" aria-controls="tocInlineBody" disabled>
+        <span class="toc-toggle-title">目錄</span>
+        
+<svg class="toc-chevron size-4 text-text-chrome transition-transform duration-200"
+    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <path fill-rule="evenodd"
+        d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
+        clip-rule="evenodd" />
+</svg>
+
+    </button>
+    <div class="toc-body" id="tocInlineBody" data-open="false"><ul class="toc-list"><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-11-03" data-target="2026-11-03">2026-11-03</a></li><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-11-02" data-target="2026-11-02">2026-11-02</a></li><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-11-01" data-target="2026-11-01">2026-11-01</a></li></ul></div>
+    
+    <script data-cfasync="false">
+    if (document.documentElement.classList.contains('js')) {
+        var tocBody = document.getElementById('tocInlineBody');
+        if (tocBody) tocBody.inert = true;
+    }
+    </script>
+</nav>
+
+<!-- Sidebar TOC (`toc` breakpoint and up; see --breakpoint-toc in source/css/_core/tokens.css) -->
+<nav id="tocSidebar" class="toc-sidebar hidden toc:block" aria-label="目錄" data-pagefind-ignore>
+    <div class="toc-sidebar-inner">
+        <p class="toc-sidebar-title">目錄</p>
+        <div class="toc-body"><ul class="toc-list"><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-11-03" data-target="2026-11-03">2026-11-03</a></li><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-11-02" data-target="2026-11-02">2026-11-02</a></li><li class="toc-item" data-level="0"><a class="toc-link" href="#2026-11-01" data-target="2026-11-01">2026-11-01</a></li></ul></div>
+    </div>
+</nav>
+
+    
 
     <div class="prose-shiro" data-pagefind-body>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Jī khòng jī lio̍k nî tsa̍p-it gue̍h ê gue̍h-tsì.</p>
@@ -481,16 +519,41 @@
 ## 2026-11-06
 ## 2026-11-05
 ## 2026-11-04
-## 2026-11-03
 -->
 
 
 
 
-<h2 id="2026-11-02"><a href="#2026-11-02" class="headerlink" title="2026-11-02"></a>2026-11-02</h2><h2 id="2026-11-01"><a href="#2026-11-01" class="headerlink" title="2026-11-01"></a>2026-11-01</h2><ul>
+
+<h2 id="2026-11-03"><a href="#2026-11-03" class="headerlink" title="2026-11-03"></a>2026-11-03</h2><ul>
+<li><p>LINGUIST List bīn-tíng tsi̍t-kuá-á iàu-ì ê siau-sit:</p>
+<ul>
+<li>Willem Burung: &quot;A Grammar of Wano&quot; <a target="_blank" rel="noopener" href="https://linguistlist.org/issues/37/3596/">https://linguistlist.org/issues/37/3596/</a></li>
+<li>Software: Fonology <a target="_blank" rel="noopener" href="https://linguistlist.org/issues/37/3590/">https://linguistlist.org/issues/37/3590/</a></li>
+<li>Workshop at SLE 2027 - Birth-Order Name Series across Languages and Cultures (Slovakia) <a target="_blank" rel="noopener" href="https://linguistlist.org/issues/37/3581/">https://linguistlist.org/issues/37/3581/</a></li>
+<li>Grammar From Space: How Spatial Elements Become Applicatives (Belgium) <a target="_blank" rel="noopener" href="https://linguistlist.org/issues/37/3571/">https://linguistlist.org/issues/37/3571/</a></li>
+<li>ICLC18: Iconicity Between Specificity and Universality Across Languages and Modalities (Germany) <a target="_blank" rel="noopener" href="https://linguistlist.org/issues/37/3569/">https://linguistlist.org/issues/37/3569/</a></li>
+<li>6th Penn State–Monash Korean Applied Linguistics Symposium (USA) <a target="_blank" rel="noopener" href="https://linguistlist.org/issues/37/3560/">https://linguistlist.org/issues/37/3560/</a></li>
+<li>Workshop at SLE 2027 – Something Old, Something New, Something Borrowed: Non-Finite Verb Forms in Language Contact and Grammatical Description (Slovakia) <a target="_blank" rel="noopener" href="https://linguistlist.org/issues/37/3543/">https://linguistlist.org/issues/37/3543/</a></li>
+<li>12th International Conference on Pluricentric Languages and their Non-Dominant Varieties (Cyprus) <a target="_blank" rel="noopener" href="https://linguistlist.org/issues/37/3524/">https://linguistlist.org/issues/37/3524/</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="2026-11-02"><a href="#2026-11-02" class="headerlink" title="2026-11-02"></a>2026-11-02</h2><ul>
+<li><p>Ko-su-tāi (高師大) Ing-gí-hē ê si̍k-sū-pan tsin-tshì, gí-giân-tsoo tuì 116 ha̍k-nî (2027) khai-sí, lâng-gia̍h khì hōo kàu-ha̍k-tsoo tsia̍h--khì. M̄-koh 115 ha̍k-nî (2026) ê khó-tshì, iáu-koh ū leh tsio gí-giân-tsoo ê ha̍k-sing. 116 ha̍k-nî m̄ tsai ē piàn siánn-khuán? Bô siōnn tio̍h kóng ū tsit-hō ki-huē tú--tio̍h, tsò tsi̍t-ê-á kì-lo̍k--ê.</p>
+<ul>
+<li>114學年度本校研究所碩博士班甄試入學招生簡章公告 <a target="_blank" rel="noopener" href="https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=408&GI=4">https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=408&amp;GI=4</a></li>
+<li>114學年度本校研究所碩士班(修正第iii頁及第32頁)、博士班招生考試 <a target="_blank" rel="noopener" href="https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=432&GI=4">https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=432&amp;GI=4</a></li>
+<li>115學年度本校研究所碩博士班甄試入學招生簡章 <a target="_blank" rel="noopener" href="https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=532&GI=4">https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=532&amp;GI=4</a></li>
+<li>115學年度本校研究所碩士班、博士班招生簡章 <a target="_blank" rel="noopener" href="https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=549&GI=4">https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=549&amp;GI=4</a></li>
+<li>116學年度本校研究所碩博士班甄試入學招生簡章公告 <a target="_blank" rel="noopener" href="https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=650&GI=4">https://c.nknu.edu.tw/aca/NewsDetail.aspx?Nid=650&amp;GI=4</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="2026-11-01"><a href="#2026-11-01" class="headerlink" title="2026-11-01"></a>2026-11-01</h2><ul>
 <li><p><a target="_blank" rel="noopener" href="https://ix5961.wixstudio.com/2026nclcknu">NCL-2026</a> iàu-ì ê tsi̍t-kuá-á tê-bo̍k:</p>
 <ul>
-<li>敢問句 vs. 豈問句 —台語「敢問句」與「豈問句」的語體分工與情態語用辨析</li>
+<li>敢問句 vs. 豈問句—台語「敢問句」與「豈問句」的語體分工與情態語用辨析</li>
 <li>Causality in Three Taiwanese Southern Min Particles</li>
 <li>華語時間約量表達之語意判斷測試</li>
 <li>Non-canonical wh-questions in Hakka</li>
@@ -567,6 +630,12 @@
     </div>
 
     
+    <button id="backToTop" type="button" class="back-to-top" data-visible="false" aria-label="回到頂部" hidden>
+        <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>
+    </button>
+    
     
     
     <div class="shiro-search-components" data-pagefind-ignore>
@@ -604,7 +673,11 @@
     
     <script defer src="/js/search-bootstrap.min.js?v=e6ff1f0d"></script>
     
+    <script defer src="/js/toc.min.js?v=3e0cca47"></script>
+    
     <script defer src="/js/progress.min.js?v=d01e3a23"></script>
+    
+    <script defer src="/js/back-to-top.min.js?v=ff36a748"></script>
     
     <script defer src="/js/mobile-menu.min.js?v=40df95a6"></script>
     
